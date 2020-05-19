@@ -1,0 +1,160 @@
+<script src="https://sdk.amazonaws.com/js/aws-sdk-2.142.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.min.css" rel="stylesheet" />
+<section class="container" id="Other" style="margin-bottom:15px; padding: 10px 10px; font-family: Verdana, Geneva, sans-serif; color:#333333; font-size:0.9em;">
+    <div class="row col-xs-12 col-md-12">
+
+        <!-- Instructions -->
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <p>
+                    Thank you for your interest in this project. My name is Danielle Dean, and I am a Visual Arts professor at the University of California San Diego. I am working on an exhibition in which I will incorporate responses to this hit within the scope of a larger project related to industry and labor. 
+                </p>
+                <p>
+                    This project studies Fordlandia, a rubber tree plantation in the Amazon, Brazil, which brought in thousands of workers beginning in 1928, offering its citizens utopian promises. Realistically, the workers were faced with unhygienic, sometimes fatal, living and working conditions. What you create here will contribute to a collective film about the relationship between Fordism and modern clickwork, which will be displayed in an upcoming exhibition at an art museum. 
+                </p>
+                <p>
+                    The approximate time to complete this hit is one hour. To participate, you will need access to a color printer and video recording device. This hit has two tasks.
+                </p>
+                <ol>
+                    <li>
+                        In task 1, you will be asked to download and print a file, then assemble it to form an image.
+                    </li>
+                    <li>
+                        In task 2, you will be asked to videotape yourself responding to a written script and describing the work you do.
+                    </li>
+                </ol>
+                <p>
+                    You will receive $21 for completing this hit, which will also cover printing costs. You are guaranteed to be reimbursed for printing if there is clear evidence that you completed the printing task, even if your response is not fully accepted.
+                </p>
+                <p>
+                    If you are interested in further contributing to the larger project behind this hit, provide your email address. Applicable candidates who successfully complete this hit will be notified of future work for additional compensation and a greater contribution to the project. 
+                </p>
+                <fieldset>
+                    <div class="input-group">
+                        <label>Please enter your email(optional):</label>
+                        <input class="form-control" name="Q1Answer" size="120" type="text" />
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-header">
+                TASK 1
+            </div>
+            <div class="panel-body">
+                <img class="image" src="https://ddean-mturk-art-project.s3.amazonaws.com/fullbackground.jpg" />
+                <ol>
+                    <li>
+                        To proceed with this hit, you will be asked to download and print a 25-page pdf, and assemble it to create the image above.
+                        <ol>
+                            <li>
+                                Depending on your paper size, download either the letter or A4 format of the image, and print it on a COLOR printer.
+                                <br />
+                                FILE FOR LETTER-SIZE PAPER: <a href="https://ddean-mturk-art-project.s3.amazonaws.com/backdrop_letter.pdf">Download here</a>
+                                <br />
+                                FILE FOR A4 PAPER: <a href="https://ddean-mturk-art-project.s3.amazonaws.com/backdrop_a4.pdf">Download here</a>
+                            </li>
+                            <li>
+                                Cut off the white borders from each sheet of paper and tape together the sheets, using the guide below. The numbers correspond to numbers at the bottom right corner of each printed sheet, and will help you piece the image together.
+                                <img class="image" src="https://ddean-mturk-art-project.s3.amazonaws.com/tiledguide.jpg" />
+                            </li>
+                            <li>
+                                Once assembled, hang the image in whatever space you want.
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
+            </div>
+            <div class="panel-header">
+                TASK 2
+            </div>
+            <div class="panel-body">
+                <ol start="2">
+                    <li>Situate yourself in front of the assembled image. Using any video recording device, record yourself completing the following tasks.
+                        <ol>
+                            <li>
+                                Describe your experience as a Mechanical Turk Worker. You may consider the following:<br>
+                                <span style="margin: 0 30px">
+                                    Do you work full-time as a Turk Worker?<br />
+                                    How are you compensated for your work?<br />
+                                    Where do you spend the money you make as a Turk worker?<br />
+                                    Have you ever been paid for your Turk work with Amazon credit?<br />
+                                    Do you feel fairly compensated for your work?<br />
+                                    Do you like being a Turk worker?<br />
+                                    What would your dream life be?<br />
+                                </span>
+                            </li>
+                            <li>
+                                The following script is an excerpt from the journal of a Fordlandia worker. Familiarize yourself with it, and interpret the text however you wish. Record yourself performing your interpretation of the script.
+                                <div style="margin: 0 30px">
+                                    “We were not happy because on payday we were often given a card as a marker of owed money instead of our actual wages. As it took so long for the wages to get here on the steamship”
+                                </div>
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
+                <fieldset>
+                <div style="padding: 40px; background: #dcf8fa; margin: 0 auto; width: 50%; border-radius: 10px; text-align: left;">
+                    <label style="text-align: left; color: #176fbd; ">You can upload one or more videos here (as necessary to complete your tasks)</label>
+                    <input id="file" type="file" style="margin: 20px 0">
+                    <button id="upload_file_button" style="display:block; background:#176fbd; color:#fff; padding: 10px 16px; border: none; border-radius: 5px" type="button">Upload file</button>
+                    <span id="status">&nbsp;</span>
+                </div>
+            </fieldset>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- close container -->
+
+<style type="text/css">
+    fieldset { padding: 10px; background:#fbfbfb; border-radius:5px; margin-bottom:5px; }
+    .image { display: block; margin: 20px auto; width: 60%;
+</style>
+<script>
+  let config = {
+    region: 'us-east-1',
+    pool: 'us-east-1:8743c738-0614-4858-9016-d74050a10a42',
+    bucket: 'mturk-art-project-worker-uploads'
+  }
+  AWS.config.region = config.region;
+  // Configure the credentials provider to use your identity pool
+  AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: config.pool,
+  });
+  
+  let s3 = new AWS.S3({
+    apiVersion: '2006-03-01',
+    params: { Bucket: config.bucket },
+  });
+  
+  do_upload = function(event) {
+    // Reset the status indicator and hidden file uploaded flag
+    $("#status").text("Uploading...");
+    $(event.currentTarget).prop("disabled", true);
+    let file = $("#file").prop('files')[0];            
+    let workerId = turkGetParam('workerId');
+    let assignmentId = turkGetParam('assignmentId');
+    let hitId = turkGetParam('hitId');
+    let fileKey = hitId + '-' + assignmentId + '-' + workerId + '-' + file.name;
+    
+    s3.upload({
+      Key: fileKey,
+      Body: file,
+      ContentType: file.type,
+      ACL: 'bucket-owner-full-control'
+    }, function(err, data) {
+      if (err) {
+        alert("Failed to upload. Please contact the Requester.");
+        $("#status").text("");
+      }
+      else{
+        $("#status").text("Success.");
+      }
+      $(event.currentTarget).prop("disabled", false);
+    });
+  };
+  
+  $("#upload_file_button").on("click", do_upload);
+</script>

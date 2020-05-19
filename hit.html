@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <title>
+      mturk
+    </title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.142.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    
+
+    <fieldset>
+        <div style="padding: 40px; background: #dcf8fa; margin: 0 auto; width: 50%; border-radius: 10px; text-align: left;">
+            <label style="text-align: left; color: #176fbd; ">Take a photograph of your bed and upload it here.</label>
+            <input id="workPlaces" type="file" style="margin: 20px 0"  multiple accept="image/png, image/jpeg">
+            <button id="upload_file_button" style="display:block; background:#176fbd; color:#fff; padding: 10px 16px; border: none; border-radius: 5px" type="button">Upload image</button>
+            <span id="status">&nbsp;</span>
+        </div>
+    </fieldset>
+    <label>Please enter your email(optional):</label>
+    <input name="email" size="120" type="text" />
+    <!-- close container -->
+
+    <script>
+      let config = {
+        region: 'us-east-1',
+        pool: 'us-east-1:8743c738-0614-4858-9016-d74050a10a42',
+        bucket: 'mturk-art-project-worker-uploads/workPlace'
+      }
+      AWS.config.region = config.region;
+      // Configure the credentials provider to use your identity pool
+      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+          IdentityPoolId: config.pool,
+      });
+      
+      let s3 = new AWS.S3({
+        apiVersion: '2006-03-01',
+        params: { Bucket: config.bucket },
+      });
+      
+      uploadFiles = (event) => {
+        $(event.currentTarget).prop("disabled", true);
+        const files = $("#workPlaces").prop('files');
+        if(files.length === 3) {
+            $("#status").text("Uploading...");
+            const workerId = turkGetParam('workerId') ? turkGetParam('workerId') : 'workerId' ;
+            const hitId = turkGetParam('hitId') ? turkGetParam('hitId') : 'hitId';
+            for(var i = 0; i < 3; i++) {
+                const fileKey = `${hitId}_${workerId}_${files[i].name}`;
+                s3.upload({
+                  Key: fileKey,
+                  Body: files[i],
+                  ContentType: files[i].type,
+                  ACL: 'bucket-owner-full-control'
+                }, function(err, data) {
+                  if (err) {
+                    alert("Failed to upload. Please contact the Requester.");
+                    $("#status").text("Failed upload.");
+                  }
+                  else{
+                    $("#status").text("Success.");
+                  }
+                }).on('httpUploadProgress', function(e) {
+                    console.log(e.loaded);
+                });;
+            }
+        }
+        else {
+            $("#status").text(`Upload ${files.length > 3 ? 'Only ' : ''}three files`);
+        }
+        $(event.currentTarget).prop("disabled", false);
+      };
+      
+      $("#upload_file_button").on("click", uploadFiles);
+    </script>
+  </body>
+</html>
